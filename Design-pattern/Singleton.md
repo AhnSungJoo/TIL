@@ -1,11 +1,12 @@
 ## singleton
-디자인패턴 중 하나  
-소프트웨어 디자인 패턴에서 싱글턴 패턴(Singleton pattern)을 따르는 클래스는, 생성자가 여러 차례 호출되더라도 실제로 생성되는 객체는 하나이고    
-최초 생성 이후에 호출된 생성자는 최초의 생성자가 생성한 객체를 리턴한다. 이와 같은 디자인 유형을 싱글턴 패턴이라고 한다.    
-주로 공통된 객체를 여러개 생성해서 사용하는 DBCP(DataBase Connection Pool)와 같은 상황에서 많이 사용된다.
+- 디자인 패턴 중 하나   
+- 인스턴스는 한 번만 생성된다.   
+- 아래의 코드에서 customlogger 클래스에 metaclass를 설정해줌으로써 인스턴스를 한 번만 생성하게 한다.    
+- 인스턴스를 한 번만 생성한다는 것은 처음 인스턴스를 생성할때만 __init__ 을 호출하고 그 이후 인스턴스를 생성해도 __init__을 호출하지 않는다 
+- 이래의 코드에서 logger = CustomLogger.__call__()에서 __call__ 을 호출함으로써 __init__도 호출된다. 
 
 
-
+아래의 코드는 python에 logger 클래스를 커스텀 한 코드이다. 
 ~~~
 import logging
 import os
@@ -19,40 +20,41 @@ class SingletonType(type):
             cls.__instance = super(SingletonType, cls).__call__(*args, **kwargs)
             return cls.__instance
 
-
 class CustomLogger(object, metaclass=SingletonType):
     _logger = None
 
-    def __init__(self):
+    def __init__(self, level_name, format_msg, dir_name="./logs/", file_name='.log'):
+        """
+            Singleton class
+            Only first time call __init__ method
+
+        """
+        print("init")
         self._logger = logging.getLogger()
-        self._logger.setLevel(logging.DEBUG)
-        formatter = logging.Formatter('[%(levelname)s|%(filename)s:%(lineno)s %(asctime)s > %(message)s')
+        self._logger.setLevel(self.set_level(level_name))
+        self.formatter = logging.Formatter(format_msg)
+        self.dirname = dir_name
+        if not os.path.isdir(self.dirname):
+            os.mkdir(self.dirname)
+        fileHandler = self.set_filehandler(file_name)
+        self.add_handler(fileHandler)
 
-        import datetime
-        now = datetime.datetime.now()
-        import time
-        timestamp = time.mktime(now.timetuple())
+    def add_handler(self, handler_name):
+        self._logger.addHandler(handler_name)
 
-        dirname = './logs/'
-        if not os.path.isdir(dirname):
-            os.mkdir(dirname)
-        fileHandler = logging.FileHandler(dirname + now.strftime("%Y-%m-%d %H:%M:%S") + ".log")
-        streamHandler = logging.StreamHandler()
+    def del_handler(self, handler_name):
+        self._logger.removeHandler(handler_name)
+        
+    def print_info(self, msg):
+        self._logger.info(msg)
 
-        fileHandler.setFormatter(formatter)
-        streamHandler.setFormatter(formatter)
-
-        self._logger.addHandler(fileHandler)
-        self._logger.addHandler(streamHandler)
-
-    def get_logger(self):
-        return self._logger
-
-    def print_(self):
-        print("here")
+logger = CustomLogger.__call__()
+logger.print_info("hi")   
 
 
-logger = CustomLogger.__call__().get_logger()
-logger.info("hi")   
-
-
+    
+---
+레퍼런스    
+[1] http://snowdeer.github.io/python/2017/11/18/python-custom-logging-class/   
+[2] https://dragon82.tistory.com/48   
+[3] https://ourcstory.tistory.com/105
