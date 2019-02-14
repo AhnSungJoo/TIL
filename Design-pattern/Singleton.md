@@ -52,5 +52,6 @@ class CustomLogger(object, metaclass=SingletonType):
 
 
 logger = CustomLogger.__call__().get_logger()
-logger.info("hi")
+logger.info("hi")   
+
 """
