@@ -52,8 +52,8 @@ logger = CustomLogger.__call__()
 logger.print_info("hi")   
 
 
-    
----
+~~~~
+-----
 레퍼런스    
 [1] http://snowdeer.github.io/python/2017/11/18/python-custom-logging-class/   
 [2] https://dragon82.tistory.com/48   
