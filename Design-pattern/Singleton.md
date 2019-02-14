@@ -5,7 +5,7 @@
 주로 공통된 객체를 여러개 생성해서 사용하는 DBCP(DataBase Connection Pool)와 같은 상황에서 많이 사용된다.
 
 
-""" 
+'''
 import logging
 import os
 
@@ -50,8 +50,4 @@ class CustomLogger(object, metaclass=SingletonType):
     def print_(self):
         print("here")
 
-
-logger = CustomLogger.__call__().get_logger()
-logger.info("hi")   
-
-"""
+'''
