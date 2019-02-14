@@ -21,7 +21,7 @@ my_dict = dict()
 ~~~
 
 - 예약어와 충돌할 경우    
-함수 인자가 예약어와 충돌할 경우 인자뒤에 '_' 언더바(underscore)를 붙인다. 
+함수 인자가 예약어와 충돌할 경우 인자뒤에 '_' 언더바(underscore)를 붙인다.   
 ex )
 ~~~
 def func1(time_, name_):
