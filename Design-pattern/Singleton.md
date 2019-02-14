@@ -50,4 +50,4 @@ class CustomLogger(object, metaclass=SingletonType):
     def print_(self):
         print("here")
 
-'''
+
