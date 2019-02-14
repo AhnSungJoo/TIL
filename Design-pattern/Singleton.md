@@ -6,7 +6,6 @@
 
 
 '''   
-
 import logging
 import os
 
@@ -49,7 +48,10 @@ class CustomLogger(object, metaclass=SingletonType):
         return self._logger
 
     def print_(self):
-        print("here")   
-    '''
+        print("here")
 
+
+logger = CustomLogger.__call__().get_logger()
+logger.info("hi")   
+'''
 
