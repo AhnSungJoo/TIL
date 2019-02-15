@@ -25,5 +25,7 @@ xrange 에서는 - + 였다면 xrevrange 는 반대로 + - 이다 .
 
 ------
 레퍼런스
+
+
 [1] https://redis.io/commands/xrange   
 [2] https://redis.io/topics/streams-intro
